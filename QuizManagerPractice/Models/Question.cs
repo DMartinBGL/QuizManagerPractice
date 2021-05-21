@@ -14,7 +14,7 @@ namespace QuizManagerPractice.Models
         [Display(Name = "Question")]
         public string QuestionName { get; set; }
         public string Category { get; set; }
-
+        [Display(Name = "Answers")]
         public List<Answer>  Answers { get; set; }
     }
 }
