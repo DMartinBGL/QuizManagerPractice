@@ -15,6 +15,6 @@ namespace QuizManagerPractice.Models
         public bool Correct { get; set; }
 
         public Question Question { get; set; }
-        public object QuestionID { get; internal set; }
+        public int QuestionID { get; internal set; }
     }
 }

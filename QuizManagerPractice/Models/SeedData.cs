@@ -24,30 +24,30 @@ namespace QuizManagerPractice.Models
                 context.Question.AddRange(
                     new Question
                     {
-                        QuestionName = "When Harry Met Sally",
+                        QuestionName = "Question 1",
                         Category = "Romantic Comedy",
                         Answers = new List<Answer> { new Answer { AnswerID = 1, AnswerName = "Answer", Correct = true }  },
                     },
 
                     new Question
                     {
-                        QuestionName = "When Harry Met Sally",
+                        QuestionName = "Question 2",
                         Category = "Romantic Comedy",
-                        Answers = new List<Answer> { new Answer { AnswerID = 1, AnswerName = "Answer", Correct = true } },
+                        Answers = new List<Answer> { new Answer { AnswerID = 2, AnswerName = "Answer", Correct = true } },
                     },
 
                     new Question
                     {
-                        QuestionName = "When Harry Met Sally",
+                        QuestionName = "Question 3",
                         Category = "Romantic Comedy",
-                        Answers = new List<Answer> { new Answer { AnswerID = 1, AnswerName = "Answer", Correct = true } },
+                        Answers = new List<Answer> { new Answer { AnswerID = 3, AnswerName = "Answer", Correct = true } },
                     },
 
                     new Question
                     {
-                        QuestionName = "When Harry Met Sally",
+                        QuestionName = "Question 4",
                         Category = "Romantic Comedy",
-                        Answers = new List<Answer> { new Answer { AnswerID = 1, AnswerName = "Answer", Correct = true } },
+                        Answers = new List<Answer> { new Answer { AnswerID = 4, AnswerName = "Answer", Correct = true } },
                     }
                 );
                 context.SaveChanges();
