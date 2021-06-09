@@ -15,6 +15,7 @@ namespace QuizManagerPractice.Models
         public string QuestionName { get; set; }
         public string Category { get; set; }
         [Display(Name = "Answers")]
-        public List<Answer>  Answers { get; set; }
+        [MaxLength(4)]
+        public ICollection<Answer>  Answers { get; set; }
     }
 }

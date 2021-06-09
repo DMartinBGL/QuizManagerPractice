@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,8 +20,8 @@ namespace QuizManagerPractice.Controllers
         // GET: Answers
         public async Task<IActionResult> Index()
         {
-            var mvcQuizContext = _context.Answer.Include(a => a.Question);
-            return View(await mvcQuizContext.ToListAsync());
+            var answerContext = _context.Answers.Include(a => a.Question);
+            return View(await answerContext.ToListAsync()); ;
         }
 
         // GET: Answers/Details/5
@@ -34,7 +32,7 @@ namespace QuizManagerPractice.Controllers
                 return NotFound();
             }
 
-            var answer = await _context.Answer
+            var answer = await _context.Answers
                 .Include(a => a.Question)
                 .FirstOrDefaultAsync(m => m.AnswerID == id);
             if (answer == null)
@@ -48,7 +46,7 @@ namespace QuizManagerPractice.Controllers
         // GET: Answers/Create
         public IActionResult Create()
         {
-            ViewData["QuestionID"] = new SelectList(_context.Question, "QuestionID", "QuestionID");
+            ViewBag.QuestionIds = new SelectList(_context.Questions, "QuestionID", "QuestionName");
             return View();
         }
 
@@ -57,15 +55,15 @@ namespace QuizManagerPractice.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AnswerID,AnswerName,Correct,QuestionID")] Answer answer)
+        public async Task<IActionResult> Create(Answer answer)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(answer);
+                _context.Answers.Add(answer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["QuestionID"] = new SelectList(_context.Question, "QuestionID", "QuestionID", answer.QuestionID);
+            ViewData["QuestionID"] = new SelectList(_context.Questions, "QuestionID", "QuestionName", answer.QuestionID);
             return View(answer);
         }
 
@@ -77,12 +75,12 @@ namespace QuizManagerPractice.Controllers
                 return NotFound();
             }
 
-            var answer = await _context.Answer.FindAsync(id);
+            var answer = await _context.Answers.FindAsync(id);
             if (answer == null)
             {
                 return NotFound();
             }
-            ViewData["QuestionID"] = new SelectList(_context.Question, "QuestionID", "QuestionID", answer.QuestionID);
+            ViewData["QuestionID"] = new SelectList(_context.Questions, "QuestionID", "QuestionID", answer.QuestionID);
             return View(answer);
         }
 
@@ -100,25 +98,12 @@ namespace QuizManagerPractice.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(answer);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AnswerExists(answer.AnswerID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _context.Update(answer);
+                await _context.SaveChangesAsync();
+                
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["QuestionID"] = new SelectList(_context.Question, "QuestionID", "QuestionID", answer.QuestionID);
+            ViewData["QuestionID"] = new SelectList(_context.Questions, "QuestionID", "QuestionID", answer.QuestionID);
             return View(answer);
         }
 
@@ -130,7 +115,7 @@ namespace QuizManagerPractice.Controllers
                 return NotFound();
             }
 
-            var answer = await _context.Answer
+            var answer = await _context.Answers
                 .Include(a => a.Question)
                 .FirstOrDefaultAsync(m => m.AnswerID == id);
             if (answer == null)
@@ -146,15 +131,15 @@ namespace QuizManagerPractice.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var answer = await _context.Answer.FindAsync(id);
-            _context.Answer.Remove(answer);
+            var answer = await _context.Answers.FindAsync(id);
+            _context.Answers.Remove(answer);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AnswerExists(int id)
         {
-            return _context.Answer.Any(e => e.AnswerID == id);
+            return _context.Answers.Any(e => e.AnswerID == id);
         }
     }
 }

@@ -1,0 +1,27 @@
+﻿@model QuizManagerPractice.Models.UserLoginViewModel
+@{
+    ViewBag.Title = "User Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    <div class="editor-label">
+        @Html.LabelFor(m => m.UserName)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(m => m.UserName)
+        @Html.ValidationMessageFor(m => m.UserName)
+    </div>
+    <div class="editor-label">
+        @Html.LabelFor(m => m.Password)
+    </div>
+    <div class="editor-field">
+        @Html.PasswordFor(m => m.Password)
+        @Html.ValidationMessageFor(m => m.Password)
+    </div>
+    <div>
+        <p>
+            <input type="submit" value="Log In" />
+        </p>
+    </div>
+}

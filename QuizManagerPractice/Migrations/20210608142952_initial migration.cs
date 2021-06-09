@@ -2,12 +2,12 @@
 
 namespace QuizManagerPractice.Migrations
 {
-    public partial class InitalCreate : Migration
+    public partial class initialmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Question",
+                name: "Questions",
                 columns: table => new
                 {
                     QuestionID = table.Column<int>(type: "int", nullable: false)
@@ -17,11 +17,11 @@ namespace QuizManagerPractice.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Question", x => x.QuestionID);
+                    table.PrimaryKey("PK_Questions", x => x.QuestionID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Answer",
+                name: "Answers",
                 columns: table => new
                 {
                     AnswerID = table.Column<int>(type: "int", nullable: false)
@@ -32,28 +32,28 @@ namespace QuizManagerPractice.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Answer", x => x.AnswerID);
+                    table.PrimaryKey("PK_Answers", x => x.AnswerID);
                     table.ForeignKey(
-                        name: "FK_Answer_Question_QuestionID",
+                        name: "FK_Answers_Questions_QuestionID",
                         column: x => x.QuestionID,
-                        principalTable: "Question",
+                        principalTable: "Questions",
                         principalColumn: "QuestionID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Answer_QuestionID",
-                table: "Answer",
+                name: "IX_Answers_QuestionID",
+                table: "Answers",
                 column: "QuestionID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Answer");
+                name: "Answers");
 
             migrationBuilder.DropTable(
-                name: "Question");
+                name: "Questions");
         }
     }
 }

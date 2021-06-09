@@ -19,26 +19,40 @@ namespace QuizManagerPractice.Controllers
         // GET: Questions
         public async Task<IActionResult> Index()
         {
-            var questionContext = _context.Question.Include(x => x.Answers);
+            var questionContext = _context.Questions.Include(x => x.Answers);
             return View(await questionContext.ToListAsync());
         }
 
         // GET: Questions/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
+            //var questionContext = _context.Questions.Include(x => x.Answers);
+            //var answers = questionContext.FirstOrDefaultAsync(x => x.QuestionID==id).GetAwaiter().GetResult().Answers;
+
+            //if (answers == null)
+            //{
+            //    return NotFound();
+            //}
+            //return View("../Answers/Index", answers);
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var question = await _context.Question
-                .FirstOrDefaultAsync(m => m.QuestionID == id);
-            if (question == null)
+            var answer = await _context.Answers
+                .Include(a => a.Question)
+                .FirstOrDefaultAsync(m => m.AnswerID == id);
+            if (answer == null)
             {
                 return NotFound();
             }
 
-            return View(question);
+            return View(answer);
         }
 
         // GET: Questions/Create
@@ -71,7 +85,7 @@ namespace QuizManagerPractice.Controllers
                 return NotFound();
             }
 
-            var question = await _context.Question.FindAsync(id);
+            var question = await _context.Questions.FindAsync(id);
             if (question == null)
             {
                 return NotFound();
@@ -122,7 +136,7 @@ namespace QuizManagerPractice.Controllers
                 return NotFound();
             }
 
-            var question = await _context.Question
+            var question = await _context.Questions
                 .FirstOrDefaultAsync(m => m.QuestionID == id);
             if (question == null)
             {
@@ -137,15 +151,15 @@ namespace QuizManagerPractice.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var question = await _context.Question.FindAsync(id);
-            _context.Question.Remove(question);
+            var question = await _context.Questions.FindAsync(id);
+            _context.Questions.Remove(question);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool QuestionExists(int id)
         {
-            return _context.Question.Any(e => e.QuestionID == id);
+            return _context.Questions.Any(e => e.QuestionID == id);
         }
     }
 }

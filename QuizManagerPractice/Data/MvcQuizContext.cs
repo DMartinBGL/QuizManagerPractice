@@ -11,7 +11,7 @@ namespace QuizManagerPractice.Data
         {
         }
 
-        public DbSet<Question> Question { get; set; }
-        public DbSet<Answer> Answer { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
     }
 }
