@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using QuizManagerPractice.Interfaces;
 using QuizManagerPractice.Models;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,23 @@ namespace QuizManagerPractice.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IUserRepository _userRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IUserRepository userRepository)
         {
-            _logger = logger;
+            _userRepository = userRepository;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var model = _userRepository.GetAllUsers();
+            return View(model);
+        }
+        public IActionResult Details()
+        {
+            User model = _userRepository.GetUser(1);
+            return View(model);
+
         }
 
         public IActionResult Privacy()

@@ -5,6 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using QuizManagerPractice.Data;
+using Microsoft.AspNetCore.Identity;
+using QuizManagerPractice.Interfaces;
+using QuizManagerPractice.Mocks;
 
 namespace QuizManagerPractice
 {
@@ -17,16 +20,24 @@ namespace QuizManagerPractice
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        // This method gets called by the runtime to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSingleton<IUserRepository, MockUserRepository>();
+
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 10;
+                options.Password.RequiredUniqueChars = 3;
+            }).AddEntityFrameworkStores<MvcQuizContext>();
 
             services.AddDbContext<MvcQuizContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MvcQuizContext")));
+
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // This method gets called by the runtime to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

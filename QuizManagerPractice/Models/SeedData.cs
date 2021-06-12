@@ -16,12 +16,12 @@ namespace QuizManagerPractice.Models
                     DbContextOptions<MvcQuizContext>>()))
             {
                 // Look for any Questions.
-                if (context.Question.Any())
+                if (context.Questions.Any())
                 {
                     return;   // DB has been seeded
                 }
 
-                context.Question.AddRange(
+                context.Questions.AddRange(
                     new Question
                     {
                         QuestionName = "Question 1",

@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using QuizManagerPractice.Models;
 using System;
 
 namespace QuizManagerPractice.Data
 {
-    public class MvcQuizContext : DbContext
+    public class MvcQuizContext : IdentityDbContext
     {
         public MvcQuizContext(DbContextOptions<MvcQuizContext> options)
             : base(options)
